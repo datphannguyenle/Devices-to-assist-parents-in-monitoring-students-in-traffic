@@ -50,17 +50,13 @@ void setup() {
 
 void loop() {
   sensorValue = digitalRead(sensorPin);
-  // Nếu trạng thái cảm biến không thay đổi (do nhiễu hoặc nhấn nút):
   if (sensorValue == lastTiltState) {
-    // đặt lại thời gian debounce
     lastDebounceTime = millis();
   }
   if ((millis() - lastDebounceTime) > debounceDelay) {
-    // bất kể giá trị đọc là gì, nó đã tồn tại trong khoảng thời gian debounce, vì vậy đây là trạng thái hiện tại thực tế:
     lastTiltState = sensorValue;
   }
 
-  // In giá trị cảm biến ra cổng Serial và chờ 500ms trước khi lặp lại.
   Serial.println(sensorValue);
   if (sensorValue == 1) {
     String message = "Canh bao xay ra tai nan, hoc sinh can ho tro. Vui long den ngay | Vi tri hien tai: https://www.google.com/maps?q=" + newlat + "," + newlng + " .";
@@ -151,16 +147,16 @@ static void smartDelay(unsigned long ms) {
 
 void sendSMS(String phoneNumber, String message) {
   sim800l.println("AT+CMGF=1");
-  delay(1000);
+  smartDelay(1000);
 
   sim800l.print("AT+CMGS=\"");
   sim800l.print(phoneNumber);
   sim800l.println("\"");
-  delay(1000);
+  smartDelay(1000);
 
   sim800l.print(message);
-  delay(1000);
+  smartDelay(1000);
 
   sim800l.println((char)26);
-  delay(1000);
+  smartDelay(1000);
 }
