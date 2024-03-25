@@ -26,7 +26,6 @@ bool nearSchool = false;
 bool nearHome = false;
 static const double SCHOOL_LAT = 11.08024095444668, SCHOOL_LON = 107.69359356483338;
 static const double HOME_LAT = 11.081387088090779, HOME_LON = 107.69317036965914;
-static const String NOW_LAT = "11.081387088090779", NOW_LON = "107.69317036965914";
 
 int sensorPin = 21;
 int sensorValue;
@@ -65,11 +64,6 @@ void loop() {
       sendSMS(phoneNumber, message);
       smartDelay(0);
     }
-    if (!gps.location.isValid()) {
-      String message = "!!! Canh bao xay ra tai nan, hoc sinh can ho tro. Vui long den ngay | Vi tri hien tai: https://www.google.com/maps?q=" + String(NOW_LAT) + "," + String(NOW_LON) + " .";
-      sendSMS(phoneNumber, message);
-      smartDelay(0);
-    }
   }
   smartDelay(500);
 
@@ -100,11 +94,6 @@ void loop() {
     if (gps.location.isValid() || ((newlat == 0) & (newlng == 0))) {
 
       String message = "Vi tri hien tai: https://www.google.com/maps?q=" + newlat + "," + newlng + " | Toc do hien tai: " + String(newspeed) + " km/h.";
-      sendSMS(phoneNumber, message);
-      smartDelay(0);
-    }
-    if (!gps.location.isValid()) {
-      String message = "Vi tri hien tai: https://www.google.com/maps?q=" + String(NOW_LAT) + "," + String(NOW_LON) + " | Toc do hien tai: 0 km/h.";
       sendSMS(phoneNumber, message);
       smartDelay(0);
     }
